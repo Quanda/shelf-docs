@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,9 +212,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,19 +222,44 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#registration" class="toc-h1 toc-link" data-title="Registration">Registration</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#http-request" class="toc-h2 toc-link" data-title="HTTP Request">HTTP Request</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#required-fields" class="toc-h2 toc-link" data-title="Required fields">Required fields</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#http-request-2" class="toc-h2 toc-link" data-title="HTTP Request">HTTP Request</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#required-fields-2" class="toc-h2 toc-link" data-title="Required fields">Required fields</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#books" class="toc-h1 toc-link" data-title="Books">Books</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#find-book" class="toc-h2 toc-link" data-title="Find book">Find book</a>
+                  </li>
+                  <li>
+                    <a href="#add-book" class="toc-h2 toc-link" data-title="Add Book">Add Book</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-books" class="toc-h2 toc-link" data-title="Get all Books">Get all Books</a>
+                  </li>
+                  <li>
+                    <a href="#get-book" class="toc-h2 toc-link" data-title="Get Book">Get Book</a>
+                  </li>
+                  <li>
+                    <a href="#delete-book" class="toc-h2 toc-link" data-title="Delete Book">Delete Book</a>
                   </li>
               </ul>
           </li>
@@ -246,7 +268,7 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='https://github.com/Quanda/shelf'>View Shelf on GitHub</a></li>
             <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -254,190 +276,284 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Shelf REST API docs! You can use this API to access Shelf API endpoints, which facilitates requests to manage
+your digital bookshelf.</p>
+<h1 id='registration'>Registration</h1>
+<blockquote>
+<p>To register with Shelf, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  https://shelf-app.herokuapp.com/api/users
+  -H <span class="s1">'Content-Type: application/json'</span>
+  -d <span class="s1">'{
+    "fullname": "&lt;your fullname&gt;",
+    "username": "&lt;your username&gt;",
+    "password": "&lt;your password&gt;"
+}   '</span>
+</code></pre>
+<p>Shelf uses JSON Web Token&#39;s to control access to the API. In order to get a token, you first must be
+registered with an account. To do so, either head over the <a href='https://shelf-app.herokuapp.com/signup.html'>Signup page</a> or make a POST request to the <code>users</code> endpoint as in the example on the right.
+You only need to register once.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://shelf-app.herokuapp.com/api/users</code></p>
+<h3 id='required-fields'>Required fields</h3>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fullname</td>
+<td>First and last name</td>
+</tr>
+<tr>
+<td>username</td>
+<td>Your desired username</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Your desired password</td>
+</tr>
+</tbody></table>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>If successful, you should see a 201 response code.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>To get an API token, use this code:</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  https://shelf-app.herokuapp.com/api/auth/login
+  -H <span class="s1">'Content-Type: application/json'</span>
+  -d <span class="s1">'{
+    "username": "&lt;your username&gt;",
+    "password": "&lt;your password&gt;"
+}   '</span>
 </code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>Once you are registered, to get a token, make a POST request to this endpoint 
+as in the example on the right using your Username and Password. </p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://shelf-app.herokuapp.com/api/auth/login</code></p>
+<h3 id='required-fields-2'>Required fields</h3>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>Your username</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Your password</td>
+</tr>
+</tbody></table>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>If successful, this endpoint returns a 7 day expiry token. Add that token in the header of your subsequent requests to the API
+via Bearer Authentication for your requests to be authenticated. The header should look as follows:</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
+<p><code>Authorization: Bearer &lt;yourapitoken&gt;</code></p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>&lt;yourapitoken&gt;</code> with your personal API token.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<h1 id='books'>Books</h1><h2 id='find-book'>Find book</h2>
+<blockquote>
+<p>For example, to search for books related to J.R.R Tolkien, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  https://shelf-app.herokuapp.com/api/findbook/J. R. R. Tolkien
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>The above command returns a 200 status code and an array of the top 5 books matching your search. 
+In this example, the return data would be structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zWzAAgAAQBAJ"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"selfLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.googleapis.com/books/v1/volumes/zWzAAgAAQBAJ"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"volumeInfo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"J.R.R. Tolkien"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subtitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Biography"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"authors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"Humphrey Carpenter"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"publisher"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Houghton Mifflin Harcourt"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"publishedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-03-04"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The authorized biography of the creator of Middle-earth. In the decades since his death in September 1973, millions have read THE HOBBIT, THE LORD OF THE RINGS, and THE SILMARILLION and become fascinated about the very private man behind the books. Born in South Africa in January 1892, John Ronald Reuel Tolkien was orphaned in childhood and brought up in near-poverty. He served in the first World War, surviving the Battle of the Somme, where he lost many of the closest friends he'd ever had. After the war he returned to the academic life, achieving high repute as a scholar and university teacher, eventually becoming Merton Professor of English at Oxford where he was a close friend of C.S. Lewis and the other writers known as The Inklings. Then suddenly his life changed dramatically. One day while grading essay papers he found himself writing 'In a hole in the ground there lived a hobbit' -- and worldwide renown awaited him. Humphrey Carpenter was given unrestricted access to all Tolkien's papers, and interviewed his friends and family. From these sources he follows the long and painful process of creation that produced THE LORD OF THE RINGS and THE SILMARILLION and offers a wealth of information about the life and work of the twentieth century's most cherished author."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"readingModes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"image"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"maturityRating"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_MATURE"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"allowAnonLogging"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"contentVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.9.7.0.preview.3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"panelizationSummary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"containsEpubBubbles"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"containsImageBubbles"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"imageLinks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"smallThumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://books.google.com/books/content?id=zWzAAgAAQBAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=5&amp;edge=curl&amp;source=gbs_api"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"thumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://books.google.com/books/content?id=zWzAAgAAQBAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;edge=curl&amp;source=gbs_api"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"previewLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://books.google.com/books?id=zWzAAgAAQBAJ&amp;printsec=frontcover&amp;dq=J.+R.+R.+Tolkien&amp;hl=&amp;cd=1&amp;source=gbs_api"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"infoLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://play.google.com/store/books/details?id=zWzAAgAAQBAJ&amp;source=gbs_api"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"canonicalVolumeLink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://market.android.com/details?id=book-zWzAAgAAQBAJ"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">...next</span><span class="w"> </span><span class="err">book</span><span class="w">
+    </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
+<p>This endpoint returns details about the top 5 books matching your search, 
+acting as a wrapper for the Google Books API.</p>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
+<p>This endpoint is not protected and therefore does not require an API token in the request header.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<p><code>GET https://shelf-app.herokuapp.com/api/findbook/&lt;search_string&gt;</code></p>
+
+<aside class="notice">
+You must replace <code> &lt;search_string&gt;</code> with your search string.
+</aside>
+<h2 id='add-book'>Add Book</h2>
+<blockquote>
+<p>For example, to add The Fellowship of the Ring, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST
+  https://shelf-app.herokuapp.com/api/users/books
+  -H <span class="s1">'Authorization: Bearer &lt;yourapitoken&gt;'</span>
+  -H <span class="s1">'Content-Type: application/json'</span>
+  -d <span class="s1">'{
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "author": "J. R. R. Tolkien",
+    "isbn": "9780547951942"
+}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns a 200 status code and JSON body structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Lord of the Rings: The Fellowship of the Ring"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"J. R. R. Tolkien"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isbn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9780547951942"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint adds a book to your Shelf.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://shelf-app.herokuapp.com/api/users/books</code></p>
+<h3 id='required-fields-3'>Required fields</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Field</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>title</td>
+<td>Title of the book</td>
+</tr>
+<tr>
+<td>author</td>
+<td>Author of the book</td>
+</tr>
+<tr>
+<td>isbn</td>
+<td>ISBN of the book</td>
 </tr>
 </tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">
-This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
-</aside>
+<h3 id='optional-fields'>Optional fields</h3>
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>description</td>
+<td>A description of the book</td>
+</tr>
+<tr>
+<td>rating_user</td>
+<td>A rating from 0-5</td>
+</tr>
+<tr>
+<td>image_link</td>
+<td>An image URL of the book cover</td>
+</tr>
+</tbody></table>
+<h2 id='get-all-books'>Get all Books</h2>
+<blockquote>
+<p>To retrieve all books from your Shelf, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  https://shelf-app.herokuapp.com/api/users/books
+  -H <span class="s1">'Authorization: Bearer &lt;yourapitoken&gt;
+</span></code></pre>
+<blockquote>
+<p>The above command returns a 200 status code and an array of book objects structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bbb66bf20bd240014fa351b"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"books"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bbd57953161900014b9ebef"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Lord of the Rings: The Fellowship of the Ring"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"J. R. R. Tolkien"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"isbn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9780547951942"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="err">...next</span><span class="w"> </span><span class="err">book</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="err">...next</span><span class="w"> </span><span class="err">book</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint returns all books on your Shelf.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET https://shelf-app.herokuapp.com/api/users/books</code></p>
+<h2 id='get-book'>Get Book</h2>
+<blockquote>
+<p>For example, to retrieve The Fellowship of the Ring from your Shelf, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X GET
+  https://shelf-app.herokuapp.com/api/users/books/9780547951942
+  -H <span class="s1">'Authorization: Bearer &lt;yourapitoken&gt;
+</span></code></pre>
+<blockquote>
+<p>The above command returns a 200 status code and an object structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bbd57953161900014b9ebef"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The Lord of the Rings: The Fellowship of the Ring"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"J. R. R. Tolkien"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isbn"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9780547951942"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint returns a single book from your Shelf.</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>GET https://shelf-app.herokuapp.com/api/users/books/&lt;ISBN&gt;</code></p>
+<h2 id='delete-book'>Delete Book</h2>
+<blockquote>
+<p>For example, to delete The Fellowship of the Ring from your Shelf, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X DELETE
+  https://shelf-app.herokuapp.com/api/users/books/9780547951942
+  -H <span class="s1">'Authorization: Bearer &lt;myapitoken&gt;
+</span></code></pre>
+<blockquote>
+<p>The above command returns a 204 status code and an empty body</p>
+</blockquote>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>This endpoint deletes a single book from your Shelf.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>DELETE https://shelf-app.herokuapp.com/api/users/books/&lt;ISBN&gt;</code></p>
+<h1 id='errors'>Errors</h1>
+<p>The Shelf API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -454,40 +570,16 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 <td>Unauthorized -- Your API key is wrong.</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
+<td>Not Found -- The specified book could not be found.</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests -- You&#39;re requesting too many books! Slow down!</td>
 </tr>
 <tr>
 <td>500</td>
 <td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
 
@@ -495,9 +587,6 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
