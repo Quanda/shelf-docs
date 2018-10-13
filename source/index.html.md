@@ -3,12 +3,9 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/Quanda/shelf'>View Shelf on GitHub</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -19,221 +16,271 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Shelf REST API docs! You can use this API to access Shelf API endpoints, which facilitates requests to manage
+your digital bookshelf.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# Registration
+> To register with Shelf, use this code:
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+```shell
+curl -X POST
+  https://shelf-app.herokuapp.com/api/users
+  -H 'Content-Type: application/json'
+  -d '{
+	"fullname": "<your fullname>",
+	"username": "<your username>",
+	"password": "<your password>"
+}	'
+```
+Shelf uses JSON Web Token's to control access to the API. In order to get a token, you first must be
+registered with an account. To do so, either head over the <a href='https://shelf-app.herokuapp.com/signup.html'>Signup page</a> or make a POST request to the `users` endpoint as in the example on the right.
+You only need to register once.
+
+### HTTP Request
+
+`POST https://shelf-app.herokuapp.com/api/users`
+
+### Required fields
+Field | Description
+--------- | -----------
+fullname | First and last name
+username | Your desired username
+password | Your desired password
+
+If successful, you should see a 201 response code.
 
 # Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> To get an API token, use this code:
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl -X POST
+  https://shelf-app.herokuapp.com/api/auth/login
+  -H 'Content-Type: application/json'
+  -d '{
+	"username": "<your username>",
+	"password": "<your password>"
+}	'
 ```
+Once you are registered, to get a token, make a POST request to this endpoint 
+as in the example on the right using your Username and Password. 
 
-```javascript
-const kittn = require('kittn');
+### HTTP Request
 
-let api = kittn.authorize('meowmeowmeow');
-```
+`POST https://shelf-app.herokuapp.com/api/auth/login`
 
-> Make sure to replace `meowmeowmeow` with your API key.
+### Required fields
+Field | Description
+--------- | -----------
+username | Your username
+password | Your password
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+If successful, this endpoint returns a 7 day expiry token. Add that token in the header of your subsequent requests to the API
+via Bearer Authentication for your requests to be authenticated. The header should look as follows:
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: Bearer <yourapitoken>`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>&lt;yourapitoken&gt;</code> with your personal API token.
 </aside>
 
-# Kittens
 
-## Get All Kittens
+# Books
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Find book
+> For example, to search for books related to J.R.R Tolkien, use this code:
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl -X GET
+  https://shelf-app.herokuapp.com/api/findbook/J. R. R. Tolkien
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> The above command returns a 200 status code and an array of the top 5 books matching your search. 
+In this example, the return data would be structured like this:
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
+    {
+        "id": "zWzAAgAAQBAJ",
+        "selfLink": "https://www.googleapis.com/books/v1/volumes/zWzAAgAAQBAJ",
+        "volumeInfo": {
+            "title": "J.R.R. Tolkien",
+            "subtitle": "A Biography",
+            "authors": [
+                "Humphrey Carpenter"
+            ],
+            "publisher": "Houghton Mifflin Harcourt",
+            "publishedDate": "2014-03-04",
+            "description": "The authorized biography of the creator of Middle-earth. In the decades since his death in September 1973, millions have read THE HOBBIT, THE LORD OF THE RINGS, and THE SILMARILLION and become fascinated about the very private man behind the books. Born in South Africa in January 1892, John Ronald Reuel Tolkien was orphaned in childhood and brought up in near-poverty. He served in the first World War, surviving the Battle of the Somme, where he lost many of the closest friends he'd ever had. After the war he returned to the academic life, achieving high repute as a scholar and university teacher, eventually becoming Merton Professor of English at Oxford where he was a close friend of C.S. Lewis and the other writers known as The Inklings. Then suddenly his life changed dramatically. One day while grading essay papers he found himself writing 'In a hole in the ground there lived a hobbit' -- and worldwide renown awaited him. Humphrey Carpenter was given unrestricted access to all Tolkien's papers, and interviewed his friends and family. From these sources he follows the long and painful process of creation that produced THE LORD OF THE RINGS and THE SILMARILLION and offers a wealth of information about the life and work of the twentieth century's most cherished author.",
+            "readingModes": {
+                "text": true,
+                "image": true
+            },
+            "maturityRating": "NOT_MATURE",
+            "allowAnonLogging": true,
+            "contentVersion": "0.9.7.0.preview.3",
+            "panelizationSummary": {
+                "containsEpubBubbles": false,
+                "containsImageBubbles": false
+            },
+            "imageLinks": {
+                "smallThumbnail": "http://books.google.com/books/content?id=zWzAAgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                "thumbnail": "http://books.google.com/books/content?id=zWzAAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+            },
+            "previewLink": "http://books.google.com/books?id=zWzAAgAAQBAJ&printsec=frontcover&dq=J.+R.+R.+Tolkien&hl=&cd=1&source=gbs_api",
+            "infoLink": "https://play.google.com/store/books/details?id=zWzAAgAAQBAJ&source=gbs_api",
+            "canonicalVolumeLink": "https://market.android.com/details?id=book-zWzAAgAAQBAJ"
+        }
+    },
+    {
+      ...next book
+    }
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint returns details about the top 5 books matching your search, 
+acting as a wrapper for the Google Books API.
+
+This endpoint is not protected and therefore does not require an API token in the request header.
+
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://shelf-app.herokuapp.com/api/findbook/<search_string>`
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside class="notice">
+You must replace <code> &lt;search_string&gt;</code> with your search string.
 </aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Add Book
+> For example, to add The Fellowship of the Ring, use this code:
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl -X POST
+  https://shelf-app.herokuapp.com/api/users/books
+  -H 'Authorization: Bearer <yourapitoken>'
+  -H 'Content-Type: application/json'
+  -d '{
+	"title": "The Lord of the Rings: The Fellowship of the Ring",
+	"author": "J. R. R. Tolkien",
+	"isbn": "9780547951942"
+}'
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> The above command returns a 200 status code and JSON body structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "author": "J. R. R. Tolkien",
+    "isbn": "9780547951942"
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint adds a book to your Shelf.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST https://shelf-app.herokuapp.com/api/users/books`
 
-### URL Parameters
-
-Parameter | Description
+### Required fields
+Field | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+title | Title of the book
+author | Author of the book
+isbn | ISBN of the book
 
-## Delete a Specific Kitten
+### Optional fields
+Field | Description
+--------- | -----------
+description | A description of the book
+rating_user | A rating from 0-5
+image_link | An image URL of the book cover
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## Get all Books
+> To retrieve all books from your Shelf, use this code:
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
+curl -X GET
+  https://shelf-app.herokuapp.com/api/users/books
+  -H 'Authorization: Bearer <yourapitoken>
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+> The above command returns a 200 status code and an array of book objects structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+    "_id": "5bbb66bf20bd240014fa351b",
+    "books": [
+        {
+            "_id": "5bbd57953161900014b9ebef",
+            "title": "The Lord of the Rings: The Fellowship of the Ring",
+            "author": "J. R. R. Tolkien",
+            "isbn": "9780547951942"
+        },
+        {
+          ...next book
+        },
+        {
+          ...next book
+        }
+    ]
 }
 ```
 
-This endpoint deletes a specific kitten.
+This endpoint returns all books on your Shelf.
+
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`GET https://shelf-app.herokuapp.com/api/users/books`
 
-### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
 
+## Get Book
+> For example, to retrieve The Fellowship of the Ring from your Shelf, use this code:
+
+```shell
+curl -X GET
+  https://shelf-app.herokuapp.com/api/users/books/9780547951942
+  -H 'Authorization: Bearer <yourapitoken>
+```
+
+> The above command returns a 200 status code and an object structured like this:
+
+```json
+{
+    "_id": "5bbd57953161900014b9ebef",
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "author": "J. R. R. Tolkien",
+    "isbn": "9780547951942"
+}
+```
+
+This endpoint returns a single book from your Shelf.
+
+
+### HTTP Request
+
+`GET https://shelf-app.herokuapp.com/api/users/books/<ISBN>`
+
+
+## Delete Book
+> For example, to delete The Fellowship of the Ring from your Shelf, use this code:
+
+```shell
+curl -X DELETE
+  https://shelf-app.herokuapp.com/api/users/books/9780547951942
+  -H 'Authorization: Bearer <myapitoken>
+```
+
+> The above command returns a 204 status code and an empty body
+
+
+This endpoint deletes a single book from your Shelf.
+
+
+### HTTP Request
+
+`DELETE https://shelf-app.herokuapp.com/api/users/books/<ISBN>`
